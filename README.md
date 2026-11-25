@@ -103,11 +103,22 @@ Set `SHOWCASE_MODE=false` and point `API_BASE_URL` at a reachable Laravel Sanctu
 ## Quality baseline
 
 ```sh
-yarn test --runInBand
+npm run quality
+yarn test --runInBand --coverage=false
 yarn typecheck
 ```
 
-Strict TypeScript checking and all three Jest tests passed during the README audit using installed dependencies. The tests cover demo fixtures, search and outcome filtering, and summary calculations, including empty results. Browser workflows and the connected API are outside the current suite. There is no lint script or checked-in CI workflow.
+`npm run quality` runs strict TypeScript checking, the full Jest suite, and a production showcase build. The tests cover demo fixtures, combined search and outcome filters, empty results, and score-summary calculations. Browser interactions and the connected API are outside this suite.
+
+The [GitHub Actions workflow](.github/workflows/quality.yml) runs the same checks on pushes, pull requests, and merge queues with Node.js 22 and the frozen Yarn lockfile.
+
+Enable the tracked pre-push hook once per clone after installing dependencies.
+
+```sh
+git config --local core.hooksPath .githooks
+```
+
+The hook checks the local working tree and stops the push if any command fails. To enforce the gate on GitHub, require a pull request and the **CallCraft quality** status check in the `main` branch ruleset after the first workflow run.
 
 ## Known limitations
 

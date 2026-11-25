@@ -16,7 +16,8 @@
     "generate-showcase": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production SHOWCASE_MODE=true nuxt-ts generate",
     "next-version": "node scripts/next-version.js",
     "test": "jest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "quality": "npm run typecheck && npm test -- --runInBand --coverage=false && npm run build-showcase"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",

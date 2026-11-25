@@ -34,4 +34,31 @@ describe("CallCraft Quality Coaching showcase data", () => {
       coachingCount: 0,
     });
   });
+
+  test("combines the search and outcome filters without changing the queue", () => {
+    const originalIds = demoCalls.map((call) => call.id);
+
+    expect(
+      filterDemoCalls(demoCalls, "jordan lee", "Booked").map((call) => call.id)
+    ).toEqual(["CL-2043"]);
+    expect(filterDemoCalls(demoCalls, "CL-2047", "Booked")).toEqual([]);
+    expect(filterDemoCalls(demoCalls, "no matching conversation")).toEqual([]);
+    expect(demoCalls.map((call) => call.id)).toEqual(originalIds);
+  });
+
+  test("counts scores below 80 for coaching and rounds summary rates", () => {
+    const [booked, followUp, anotherCall] = demoCalls;
+    const calls = [
+      { ...booked, score: 79 },
+      { ...followUp, score: 80 },
+      { ...anotherCall, outcome: followUp.outcome, score: 81 },
+    ];
+
+    expect(summarizeDemoCalls(calls)).toEqual({
+      total: 3,
+      averageScore: 80,
+      bookingRate: 33,
+      coachingCount: 1,
+    });
+  });
 });

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo 'Running CallCraft quality checks before push...'
+npm run quality
+status=$?
+
+if [ "$status" -ne 0 ]; then
+  echo 'Push blocked because CallCraft quality checks failed.' >&2
+fi
+
+exit "$status"

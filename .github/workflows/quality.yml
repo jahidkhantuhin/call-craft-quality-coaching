@@ -1,0 +1,23 @@
+name: Quality checks
+
+on: [push, pull_request, merge_group]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: CallCraft quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked dependencies
+        run: npm exec --yes --package=yarn@1.22.22 -- yarn install --frozen-lockfile
+      - name: Check types, run tests, and build the showcase
+        run: npm run quality
