@@ -14,6 +14,10 @@
 
 ---
 
+## Showcase overview
+
+![CallCraft walkthrough showing the dashboard, review queue, client directory, score report, and coaching scorecard](docs/media/callcraft-overview.gif)
+
 ## What you can explore
 
 - **A presentation-ready workspace** with a responsive overview, quality metrics, weekly trend, and coaching insights.
